@@ -14,15 +14,24 @@ const router = express.Router();
 router.use(logger);
 
 router.get("/", (req, res) => {
+  const name = req.query.name;
+  console.log("name: ", name);
   res.send("User List");
 });
 
 router.get("/new", (req, res) => {
-  res.send("User New Form");
+  res.render("users/new");
 });
 
 router.post("/", (req, res) => {
-  res.send("User List");
+  const isValid = true;
+  if (isValid) {
+    users.push({ name: req.body.firstName });
+    res.redirect(`/users/${users.length - 1}`);
+  } else {
+    console.log("Error");
+    res.render("/users/new", { firstName: req.body.firstName });
+  }
 });
 
 router
